@@ -1,0 +1,25 @@
+# Gradle
+.gradle/
+build/
+**/build/
+!gradle/wrapper/gradle-wrapper.jar
+
+# Android Studio / IntelliJ
+.idea/
+*.iml
+captures/
+
+# 本机环境（SDK 路径等）
+local.properties
+
+# Kotlin/Native 与其他
+.kotlin/
+native/
+.DS_Store
+
+# 证书与敏感文件（不应入库）
+*.jks
+*.keystore
+
+# 临时产物
+*.apk.idsig

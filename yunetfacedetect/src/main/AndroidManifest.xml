@@ -1,0 +1,3 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 全离线推理，不声明任何权限；namespace 在 build.gradle 中配置 -->
+<manifest />

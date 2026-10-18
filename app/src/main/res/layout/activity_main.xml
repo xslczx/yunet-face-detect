@@ -1,0 +1,442 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="8dp">
+
+    <!-- 状态 / 模型信息 -->
+    <TextView
+        android:id="@+id/tvStatus"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/panel_bg"
+        android:padding="6dp"
+        android:text="@string/status_idle"
+        android:textSize="11sp"
+        android:typeface="monospace" />
+
+    <!-- 操作按钮 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:baselineAligned="false"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btnPick"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:insetTop="4dp"
+            android:insetBottom="4dp"
+            android:text="@string/btn_pick"
+            android:textSize="11sp" />
+
+        <Button
+            android:id="@+id/btnCrop"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:insetTop="4dp"
+            android:insetBottom="4dp"
+            android:text="@string/btn_crop"
+            android:textSize="11sp" />
+
+        <Button
+            android:id="@+id/btnSelfTest"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:insetTop="4dp"
+            android:insetBottom="4dp"
+            android:text="@string/btn_selftest"
+            android:textSize="11sp" />
+
+        <Button
+            android:id="@+id/btnJava"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:insetTop="4dp"
+            android:insetBottom="4dp"
+            android:text="@string/btn_java"
+            android:textSize="11sp" />
+    </LinearLayout>
+
+    <!-- 调用方式 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:baselineAligned="false"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/label_call_mode"
+            android:textSize="12sp" />
+
+        <Spinner
+            android:id="@+id/spCallMode"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:entries="@array/call_modes" />
+    </LinearLayout>
+
+    <!-- 阈值 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:baselineAligned="false"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/label_threshold"
+            android:textSize="12sp" />
+
+        <SeekBar
+            android:id="@+id/sbThreshold"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:max="90"
+            android:progress="55" />
+
+        <TextView
+            android:id="@+id/tvThreshold"
+            android:layout_width="46dp"
+            android:layout_height="wrap_content"
+            android:gravity="end"
+            android:text="0.60"
+            android:textSize="12sp"
+            android:typeface="monospace" />
+    </LinearLayout>
+
+    <!-- 配置开关（紧凑面板：每格左侧标签 + 右侧开关，开关内不嵌文字，避免小屏挤压换行） -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:background="@drawable/panel_bg"
+        android:baselineAligned="false"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="3dp">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/tip_stretch"
+                android:textSize="11sp" />
+
+            <Switch
+                android:id="@+id/swStretch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:minHeight="20dp"
+                android:showText="false"
+                android:switchMinWidth="42dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/tip_rgb"
+                android:textSize="11sp" />
+
+            <Switch
+                android:id="@+id/swRgb"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:minHeight="20dp"
+                android:showText="false"
+                android:switchMinWidth="42dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/tip_gpu"
+                android:textSize="11sp" />
+
+            <Switch
+                android:id="@+id/swGpu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:minHeight="20dp"
+                android:showText="false"
+                android:switchMinWidth="42dp" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <!-- 裁剪参数面板（留白为×人脸框倍数；拖动即改，点「人脸裁剪」时生效） -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:background="@drawable/panel_bg"
+        android:orientation="vertical"
+        android:padding="4dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/crop_title"
+                android:textSize="11sp" />
+
+            <Button
+                android:id="@+id/btnResetParams"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:insetTop="0dp"
+                android:insetBottom="0dp"
+                android:minWidth="0dp"
+                android:minHeight="0dp"
+                android:text="@string/btn_reset_params"
+                android:textSize="10sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:baselineAligned="false"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btnPresetTight"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:insetTop="0dp"
+                android:insetBottom="0dp"
+                android:minWidth="0dp"
+                android:minHeight="0dp"
+                android:text="@string/preset_tight"
+                android:textSize="10sp" />
+
+            <Button
+                android:id="@+id/btnPresetStd"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:insetTop="0dp"
+                android:insetBottom="0dp"
+                android:minWidth="0dp"
+                android:minHeight="0dp"
+                android:text="@string/preset_std"
+                android:textSize="10sp" />
+
+            <Button
+                android:id="@+id/btnPresetLoose"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:insetTop="0dp"
+                android:insetBottom="0dp"
+                android:minWidth="0dp"
+                android:minHeight="0dp"
+                android:text="@string/preset_loose"
+                android:textSize="10sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="34dp"
+                android:layout_height="wrap_content"
+                android:text="@string/label_crop_head"
+                android:textSize="11sp" />
+
+            <SeekBar
+                android:id="@+id/sbHeadroom"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:max="40"
+                android:progress="18" />
+
+            <TextView
+                android:id="@+id/tvHeadroom"
+                android:layout_width="40dp"
+                android:layout_height="wrap_content"
+                android:gravity="end"
+                android:text="0.90"
+                android:textSize="11sp"
+                android:typeface="monospace" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="34dp"
+                android:layout_height="wrap_content"
+                android:text="@string/label_crop_chin"
+                android:textSize="11sp" />
+
+            <SeekBar
+                android:id="@+id/sbChinroom"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:max="60"
+                android:progress="32" />
+
+            <TextView
+                android:id="@+id/tvChinroom"
+                android:layout_width="40dp"
+                android:layout_height="wrap_content"
+                android:gravity="end"
+                android:text="1.60"
+                android:textSize="11sp"
+                android:typeface="monospace" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="34dp"
+                android:layout_height="wrap_content"
+                android:text="@string/label_crop_side"
+                android:textSize="11sp" />
+
+            <SeekBar
+                android:id="@+id/sbSide"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:max="40"
+                android:progress="14" />
+
+            <TextView
+                android:id="@+id/tvSide"
+                android:layout_width="40dp"
+                android:layout_height="wrap_content"
+                android:gravity="end"
+                android:text="0.70"
+                android:textSize="11sp"
+                android:typeface="monospace" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <!-- 结果叠加视图（自动填充剩余高度） -->
+    <com.yunet.face.demo.FaceOverlayView
+        android:id="@+id/overlay"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="4dp"
+        android:layout_weight="1"
+        android:background="#FF101010"
+        android:minHeight="120dp" />
+
+    <TextView
+        android:id="@+id/tvStats"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="3dp"
+        android:textSize="11sp"
+        android:typeface="monospace" />
+
+    <!-- 日志 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:baselineAligned="false"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/log_title"
+            android:textSize="12sp" />
+
+        <Button
+            android:id="@+id/btnCopyLog"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:insetTop="2dp"
+            android:insetBottom="2dp"
+            android:minWidth="0dp"
+            android:text="@string/btn_copy_log"
+            android:textSize="11sp" />
+
+        <Button
+            android:id="@+id/btnClearLog"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:insetTop="2dp"
+            android:insetBottom="2dp"
+            android:minWidth="0dp"
+            android:text="@string/btn_clear_log"
+            android:textSize="11sp" />
+    </LinearLayout>
+
+    <ScrollView
+        android:id="@+id/svLog"
+        android:layout_width="match_parent"
+        android:layout_height="140dp"
+        android:background="@drawable/panel_bg">
+
+        <TextView
+            android:id="@+id/tvLog"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="6dp"
+            android:textIsSelectable="true"
+            android:textSize="10sp"
+            android:typeface="monospace" />
+    </ScrollView>
+
+</LinearLayout>

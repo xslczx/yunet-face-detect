@@ -1,0 +1,117 @@
+plugins {
+    id 'com.android.library'
+    // 本地/远程 Maven 发布（见文件末尾 publishing 配置）
+    id 'maven-publish'
+    // AGP 9.x 内置 Kotlin 支持，无需 kotlin.android 插件。
+    // 若主工程为 AGP 8.x，取消下一行注释：
+    // id 'org.jetbrains.kotlin.android'
+}
+
+// 发布坐标：com.yunet.face:yunetfacedetect:1.0.0
+group = 'com.yunet.face'
+version = '1.0.0'
+
+android {
+    namespace 'com.yunet.face'
+    compileSdk 36
+
+    // AGP 7.1+ 需要显式声明要发布的变体，才能使用 components.release
+    // 如需一并发布源码包，改为：
+    //   singleVariant('release') { withSourcesJar() }
+    publishing {
+        singleVariant('release')
+    }
+
+    defaultConfig {
+        minSdk 24
+        targetSdk 36
+        consumerProguardFiles 'consumer-rules.pro'
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+
+    // Robolectric（JVM 上跑 Android API：覆盖 Preprocess 的像素级 EXIF 转正测试）
+    testOptions {
+        unitTests {
+            includeAndroidResources = true
+        }
+    }
+
+    kotlin {
+        compilerOptions {
+            jvmTarget = org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_17
+        }
+    }
+}
+
+dependencies {
+    // TFLite 运行时（主工程已引入时可改为 compileOnly 或删除）
+    api 'org.tensorflow:tensorflow-lite:2.17.0'
+
+    // GPU 委托为可选依赖：不引入时 delegate=GPU 会自动回退 CPU 并打印提示。
+    // 需要 GPU 推理时取消下一行注释（会增加约 3~6MB 包体）。
+    // implementation 'org.tensorflow:tensorflow-lite-gpu:2.17.0'
+
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.11.0'
+    implementation 'androidx.annotation:annotation:1.11.0'
+    implementation 'androidx.exifinterface:exifinterface:1.4.2'
+
+    // 纯 Kotlin 解码/NMS/坐标映射的 JVM 单元测试；Robolectric 供像素级预处理测试
+    testImplementation 'junit:junit:4.13.2'
+    testImplementation 'org.robolectric:robolectric:4.16'
+    testImplementation 'androidx.test.ext:junit:1.2.1'
+}
+
+// ---------------------------------------------------------------
+// 本地发布
+//   发布： ./gradlew :yunetfacedetect:publishToMavenLocal
+//   产物： ~/.m2/repository/com/yunet/face/yunetfacedetect/1.0.0/
+// 主工程消费：
+//   repositories { mavenLocal() }
+//   implementation 'com.yunet.face:yunetfacedetect:1.0.0'
+// 如需发到公司 Nexus，在 repositories 中追加
+//   maven { url 'http://192.168.0.159:8081/repository/wm-release/'; allowInsecureProtocol = true }
+// 后执行 ./gradlew :yunetfacedetect:publish
+// ---------------------------------------------------------------
+afterEvaluate {
+    publishing {
+        publications {
+            release(MavenPublication) {
+                from components.release
+                groupId = 'com.yunet.face'
+                artifactId = 'yunetfacedetect'
+                version = '1.0.0'
+
+                pom {
+                    name = 'YuNetFaceDetect'
+                    description = '可复用的 Android 人脸检测库：YuNet TFLite fp16 模型，离线推理，5 关键点，支持 Kotlin/Java 与同步/异步/协程调用'
+                    url = 'https://github.com/ShiqiYu/libfacedetection.train'
+                    licenses {
+                        license {
+                            name = 'BSD-3-Clause'
+                            url = 'https://opensource.org/licenses/BSD-3-Clause'
+                        }
+                    }
+                    developers {
+                        developer {
+                            id = 'yunet'
+                            name = 'YuNetFaceDetect'
+                        }
+                    }
+                }
+            }
+        }
+        repositories {
+            mavenLocal()
+        }
+    }
+}

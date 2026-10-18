@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- 对应 MainActivity.CallMode 的顺序 -->
+    <string-array name="call_modes">
+        <item>异步 detectAsync</item>
+        <item>同步 detectSync</item>
+        <item>协程 detect()</item>
+    </string-array>
+</resources>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">YuNet 检测 Demo</string>
+
+    <string name="status_idle">就绪：点「相册」选择一张含人脸的照片</string>
+
+    <string name="btn_pick">相册</string>
+    <string name="btn_crop">人脸裁剪</string>
+    <string name="btn_selftest">自检</string>
+    <string name="btn_java">Java 互操作</string>
+
+    <string name="label_threshold">阈值</string>
+    <string name="label_call_mode">调用方式</string>
+
+    <string name="tip_stretch">拉伸</string>
+    <string name="tip_rgb">RGB</string>
+    <string name="tip_gpu">GPU</string>
+
+    <string name="btn_copy_log">复制日志</string>
+    <string name="btn_clear_log">清空</string>
+    <string name="log_title">日志</string>
+
+    <string name="toast_copied">日志已复制</string>
+    <string name="toast_empty">日志为空</string>
+    <string name="hint_pick_image">尚未载入图片</string>
+    <string name="hint_busy">检测中…</string>
+
+    <!-- 裁剪参数面板 -->
+    <string name="crop_title">裁剪参数</string>
+    <string name="btn_reset_params">复位</string>
+    <string name="label_crop_head">头顶</string>
+    <string name="label_crop_chin">下方</string>
+    <string name="label_crop_side">左右</string>
+    <string name="preset_tight">紧凑</string>
+    <string name="preset_std">标准</string>
+    <string name="preset_loose">宽松</string>
+</resources>

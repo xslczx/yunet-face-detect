@@ -1,0 +1,65 @@
+// Demo / 集成测试用 App 模块。
+// 依赖项目内的 :yunetfacedetect（Gradle 模块方式），同时用于：
+//   1) 人工验证：选图 -> 检测 -> 绘制人脸框与关键点；
+//   2) 设备端自动化测试：./gradlew :app:connectedDebugAndroidTest
+//
+// 若想验证 README 2.4 的本地 Maven 坐标链路，把下面 project(...) 换成：
+//   implementation 'com.yunet.face:yunetfacedetect:1.0.0'
+// 并且在【模块级】repositories 里加 mavenLocal()（settings.gradle 里的会被全局 init 脚本注入的
+// 项目级仓库覆盖掉，详见 README 2.4 的注意事项）。
+plugins {
+    id 'com.android.application'
+}
+
+android {
+    namespace 'com.yunet.face.demo'
+    compileSdk 36
+
+    defaultConfig {
+        applicationId 'com.yunet.face.demo'
+        minSdk 24
+        targetSdk 36
+        versionCode 1
+        versionName '1.0.0'
+        testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            // 便于直接 installRelease 验证混淆/签名之外的链路
+            signingConfig signingConfigs.debug
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+
+    kotlin {
+        compilerOptions {
+            jvmTarget = org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_17
+        }
+    }
+}
+
+dependencies {
+    implementation project(':yunetfacedetect')
+
+    // 现代图片选择（Photo Picker，无需存储权限）+ registerForActivityResult
+    implementation 'androidx.activity:activity:1.11.0'
+    // 协程调用方式（demo 中演示 detect() 挂起函数）
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.11.0'
+    // 相册图片 EXIF 转正（与库内 detectFileSync 的处理方式一致）
+    implementation 'androidx.exifinterface:exifinterface:1.4.2'
+
+    // GPU 委托演示：取消注释后把 demo 里的 GPU 开关打开（未引入时库会自动回退 CPU 并打印提示）
+    // implementation 'org.tensorflow:tensorflow-lite-gpu:2.17.0'
+
+    // 设备端测试（真机/模拟器运行完整的加载-推理-解析链路）
+    androidTestImplementation 'androidx.test.ext:junit:1.3.0'
+    androidTestImplementation 'androidx.test:runner:1.7.0'
+    androidTestImplementation 'androidx.test:core:1.7.0'
+    androidTestImplementation 'androidx.test:rules:1.7.0'
+}

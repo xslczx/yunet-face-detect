@@ -1,0 +1,29 @@
+// 独立开发/测试工程。集成到主工程时只需拷贝 yunetfacedetect/ 模块，
+// 版本号请与主工程的 AGP / Kotlin 对齐。
+pluginManagement {
+    repositories {
+        google()
+        mavenCentral()
+        gradlePluginPortal()
+        // 如公司有私有 Nexus 镜像，在此追加，例如：
+        // maven { url 'http://192.168.0.159:8081/repository/wm-release/' }
+    }
+}
+dependencyResolutionManagement {
+    // PREFER_PROJECT：兼容全局 init 脚本注入的镜像仓库（如阿里云/Nexus）
+    repositoriesMode.set(RepositoriesMode.PREFER_PROJECT)
+    repositories {
+        // 想消费本地发布产物 com.yunet.face:yunetfacedetect 时打开本行；
+        // 注意：若全局 init 脚本给所有工程注入了项目级仓库，PREFER_PROJECT 会让这里失效，
+        // 此时请把 mavenLocal() 写到模块 build.gradle 的 repositories 里（见 README 2.4）。
+        // mavenLocal()
+        google()
+        mavenCentral()
+        // maven { url 'http://192.168.0.159:8081/repository/wm-release/' }
+    }
+}
+
+rootProject.name = 'YuNetFaceDetect'
+include ':yunetfacedetect'
+// Demo / 集成测试用 App（依赖 :yunetfacedetect）
+include ':app'
